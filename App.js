@@ -1,8 +1,8 @@
 import React from 'react';
-import Search from './Components/Search'
+import { AppContainer } from './Navigation/Navigation';
 
 export default function App() {
   return (
-    <Search/>
+    <AppContainer/>
   );
 }
