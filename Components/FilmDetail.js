@@ -1,7 +1,8 @@
 import React from 'react'
 import moment from 'moment'
 import numeral from 'numeral'
-import { StyleSheet, View, Text, ScrollView, ActivityIndicator, Image} from 'react-native'
+import { connect } from 'react-redux'
+import { StyleSheet, View, Text, ScrollView, ActivityIndicator, Image, Button, TouchableOpacity} from 'react-native'
 import { getFilmDetail, getImageFromApi } from '../API/TMDBapi'
 
 class FilmDetail extends React.Component
@@ -24,6 +25,26 @@ class FilmDetail extends React.Component
         }
     }
 
+    _toogleFavorite() {
+        const action = {type:  'TOOGLE_FAVORITE', value: this.state.film}
+        this.props.dispatch(action)
+    }
+
+    _displayFavorite() {
+        let image = require('../Images/no_favorite.png')
+        const isInFavorites = this.props.favoritesFilm.findIndex(item => this.state.film.id === item.id)
+        if (isInFavorites !== -1) {
+            image = require('../Images/favorite.png')
+        } 
+
+        return (
+            <Image
+                style={styles.favorite_image}
+                source={image}
+            />
+        )
+    }
+
     _displayFilm = () =>  {
         const film = this.state.film
         if (film !== undefined) {
@@ -33,6 +54,12 @@ class FilmDetail extends React.Component
                         style={styles.image}
                         source={{uri: getImageFromApi(film.backdrop_path)}}
                     />
+                    <TouchableOpacity
+                        style={styles.favorite_container}
+                        onPress={() => this._toogleFavorite()}
+                    >
+                        {this._displayFavorite()}
+                    </TouchableOpacity>
                     <Text style={styles.title}>{film.title}</Text>
                     <Text style={styles.description}>{film.overview}</Text>
                     <Text style={styles.info}>Sortie le {moment(film.release_date).format('DD-MM-YYYY')}</Text>
@@ -53,6 +80,10 @@ class FilmDetail extends React.Component
                 isLoading: false
             })
         })
+    }
+
+    componentDidUpdate() {
+        console.log(this.props.favoritesFilm)
     }
 
     render() {
@@ -99,7 +130,17 @@ const styles = StyleSheet.create({
     info: {
         padding: 5,
         fontWeight: 'bold',
+    },
+    favorite_container: {
+        alignItems: 'center'
+    },
+    favorite_image: {
+        width: 40,
+        height: 40,
     }
 })
 
-export default FilmDetail
+const mapStateToProps = state => ({
+    favoritesFilm: state.favoritesFilm
+})
+export default connect(mapStateToProps)(FilmDetail)
