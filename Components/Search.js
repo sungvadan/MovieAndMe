@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { StyleSheet, View, Button, TextInput, FlatList, Text, ActivityIndicator } from 'react-native'
 import films from '../Helpers/filmsData'
 import FilmItem from './FilmItem'
@@ -69,7 +70,7 @@ class Search extends React.Component {
                 <Button style={{height: 50 }} title="Rechercher" onPress={() => this._searchFilms()}/>
                 <FlatList
                     data={this.state.films}
-                    renderItem={({ item }) => <FilmItem displayDetailForFilm={this._displayDetailForFilm} film={item}/>}
+                    renderItem={({ item }) => <FilmItem displayDetailForFilm={this._displayDetailForFilm} film={item} favoritesFilm={this.props.favoritesFilm}/>}
                     keyExtractor={item => item.id.toString()}
                     onEndReachedThreshold={0.5}
                     onEndReached={() => {
@@ -108,4 +109,7 @@ const styles= StyleSheet.create({
     }
 })
 
-export default Search
+const mapStateToProps = state => ({
+    favoritesFilm: state.favoritesFilm
+})
+export default connect(mapStateToProps)(Search)

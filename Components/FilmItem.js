@@ -1,8 +1,19 @@
 import React from 'react'
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
 import { getImageFromApi } from '../API/TMDBapi'
+import { connect } from 'react-redux'
 
 class FilmItem extends React.Component {
+    _displayFavorite() {
+        if (this.props.favoritesFilm.findIndex(item => this.props.film.id === item.id) !== -1) {
+            return (
+                <Image
+                    style={styles.favorite_image}
+                    source={require('../Images/favorite.png')}
+                />
+            )
+        } 
+    }
     render() {
         const { film, displayDetailForFilm } = this.props
         return (
@@ -13,6 +24,7 @@ class FilmItem extends React.Component {
                 />
                <View style={styles.content}>
                 <View style={styles.header}>
+                    {this._displayFavorite()}
                     <Text style={styles.title}>{film.title}</Text>
                     <Text style={styles.vote}>{film.vote_average}</Text>
                 </View>
@@ -62,6 +74,10 @@ const styles = StyleSheet.create({
     footer: {
         flex: 1,
         textAlign: 'right',
+    },
+    favorite_image: {
+        width: 20,
+        height: 20,
     }
 })
 
