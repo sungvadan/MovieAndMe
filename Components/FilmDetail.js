@@ -2,11 +2,31 @@ import React from 'react'
 import moment from 'moment'
 import numeral from 'numeral'
 import { connect } from 'react-redux'
-import { StyleSheet, View, Text, ScrollView, ActivityIndicator, Image, Button, TouchableOpacity} from 'react-native'
+import { StyleSheet, View, Text, ScrollView, ActivityIndicator, Image, Button, TouchableOpacity, Share, Platform} from 'react-native'
 import { getFilmDetail, getImageFromApi } from '../API/TMDBapi'
 
 class FilmDetail extends React.Component
 {
+    static navigationOptions = ({ navigation }) => {
+    return {
+        headerRight: () => {
+            const film = navigation.getParam('film')
+            if (Platform.OS === 'ios' && film !== undefined) {
+                return (
+                    <TouchableOpacity
+                        onPress={navigation.getParam('share')}
+                    >
+                        <Image 
+                            style={styles.share_icon}
+                            source={require('../Images/share.png')}
+                        />
+                    </TouchableOpacity>
+                )
+            }
+        }
+    }
+  }
+
     constructor(props) {
         super(props)
         this.state = {
@@ -21,6 +41,32 @@ class FilmDetail extends React.Component
                 <View style={styles.loading}>
                     <ActivityIndicator size="large" color="#00ff00" />
                 </View>
+            )
+        }
+    }
+
+    _share = () => {
+        const film = this.state.film
+        if (film !== undefined) {
+            Share.share({
+                message: film.overview
+            })
+        }
+    }
+
+    _displayShareButton = () => {
+        const film = this.state.film
+        if (film !== undefined && Platform.OS === 'android') {
+            return (
+                <TouchableOpacity 
+                    style={styles.share_container}
+                    onPress={this._share}
+                >
+                    <Image 
+                        style={styles.share_icon}
+                        source={require('../Images/share.png')}
+                    />
+                </TouchableOpacity>
             )
         }
     }
@@ -78,6 +124,11 @@ class FilmDetail extends React.Component
             this.setState({
                 film: data,
                 isLoading: false
+            }, () => {
+                navigation.setParams({
+                    film: this.state.film,
+                    share: this._share
+                })
             })
         })
     }
@@ -91,6 +142,7 @@ class FilmDetail extends React.Component
             <View style={styles.main_container}>
                 {this._displayLoading()}
                 {this._displayFilm()}
+                {this._displayShareButton()}
             </View>
         )
     }
@@ -137,7 +189,23 @@ const styles = StyleSheet.create({
     favorite_image: {
         width: 40,
         height: 40,
+    },
+    share_container: {
+        position: 'absolute',
+        right: 30,
+        bottom: 30,
+        width: 50,
+        height: 50,
+        borderRadius: 30,
+        backgroundColor: '#e91e63',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    share_icon: {
+        width: 30,
+        height: 30,
     }
+    
 })
 
 const mapStateToProps = state => ({

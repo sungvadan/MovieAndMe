@@ -23,7 +23,7 @@ class Search extends React.Component {
             getFilmsFromApiWithSearchedText(this.searchText, this.page+1).then(data => {
                 this.totalPages = data.total_pages
                 this.page = data.page
-                this.setState({
+                 this.setState({
                     films: [...this.state.films, ...data.results],
                     isLoading: false,
                 })
@@ -71,6 +71,7 @@ class Search extends React.Component {
                     loadFilms={this._loadFilms}
                     page={this.page}
                     totalPages={this.totalPages}
+                    navigation={this.props.navigation}
                 />
                 {this._displayLoading()}
             </View>
