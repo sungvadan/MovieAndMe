@@ -1,11 +1,10 @@
 import React from 'react'
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
 import { getImageFromApi } from '../API/TMDBapi'
-import { connect } from 'react-redux'
 
 class FilmItem extends React.Component {
     _displayFavorite() {
-        if (this.props.favoritesFilm.findIndex(item => this.props.film.id === item.id) !== -1) {
+        if (this.props.isFavorite) {
             return (
                 <Image
                     style={styles.favorite_image}
