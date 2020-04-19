@@ -10,9 +10,10 @@ class FilmList extends React.Component
     }
 
     render () {
+        const films = this.props.isFavoritePage ? this.props.favoritesFilm : this.props.films
         return (
             <FlatList
-                data={this.props.films}
+                data={films}
                 extraData={this.props.favoritesFilm}
                 renderItem={({ item }) => <FilmItem 
                     displayDetailForFilm={this._displayDetailForFilm} 

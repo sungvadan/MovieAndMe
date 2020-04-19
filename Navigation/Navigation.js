@@ -6,11 +6,11 @@ import { Image, StyleSheet } from 'react-native'
 import Search from '../Components/Search'
 import FilmDetail from '../Components/FilmDetail'
 import FavoriteList from '../Components/FavoriteList'
-
+import TestAnimation from '../Components/TestAnimation'
 
 const HomeNavigator =  createStackNavigator({
     Search: {
-        screen: Search,
+        screen: Search, 
         navigationOptions: {
             title: 'Rechercher'
         }
@@ -34,6 +34,7 @@ const FavoriteNavigator =  createStackNavigator({
 
 const AppNavigator = createBottomTabNavigator(
     {
+        // TestAnimation: TestAnimation,
         HomeNavigator: {
             screen: HomeNavigator,
             navigationOptions: {

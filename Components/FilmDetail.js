@@ -4,6 +4,7 @@ import numeral from 'numeral'
 import { connect } from 'react-redux'
 import { StyleSheet, View, Text, ScrollView, ActivityIndicator, Image, Button, TouchableOpacity, Share, Platform} from 'react-native'
 import { getFilmDetail, getImageFromApi } from '../API/TMDBapi'
+import EnlargeShrink from './EnlargeShrink'
 
 class FilmDetail extends React.Component
 {
@@ -84,10 +85,12 @@ class FilmDetail extends React.Component
         } 
 
         return (
-            <Image
-                style={styles.favorite_image}
-                source={image}
-            />
+            <EnlargeShrink isInFavorites={isInFavorites !== -1}>
+                <Image
+                    style={styles.favorite_image}
+                    source={image}
+                />  
+            </EnlargeShrink>
         )
     }
 
@@ -187,8 +190,9 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     favorite_image: {
-        width: 40,
-        height: 40,
+        flex: 1,
+        width: null,
+        height: null,
     },
     share_container: {
         position: 'absolute',

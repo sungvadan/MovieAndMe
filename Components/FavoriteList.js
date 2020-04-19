@@ -1,13 +1,14 @@
 import React from 'react'
 import FilmList from './FilmList'
+import { connect } from 'react-redux'
 
 class FavoriteList extends React.Component
 {
     render() {
         return (
             <FilmList
-                films={this.props.favoritesFilm}
                 isFavoritePage={true}
+                navigation={this.props.navigation}
             />
         )
     }
