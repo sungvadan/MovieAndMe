@@ -1,15 +1,14 @@
 import React from 'react'
 import { TouchableOpacity, Image, StyleSheet } from 'react-native'
 import ImagePicker from 'react-native-image-picker';
+import { connect } from 'react-redux'
 
 class Avatar extends React.Component
 {
     constructor(props) {
         super(props)
-        this.state = {
-            avatar: require('../Images/faces.png')
-        }
     }
+
 
     _avatarCliked = () => {
         const options = {
@@ -29,14 +28,14 @@ class Avatar extends React.Component
                 console.log('ImagePicker Error: ', response.error);
             } else {
                 const source = { uri: response.uri };
-                this.setState({
-                    avatar: source,
-                });
+                const action = {type:  'CHANGE_AVATAR', avatar: source}
+                this.props.dispatch(action)
             }
         });
     }
 
     render() {
+        console.log(this.props)
         return (
             <TouchableOpacity
                 style={styles.avatar_container}
@@ -44,7 +43,7 @@ class Avatar extends React.Component
             >
                 <Image
                     style={styles.avatar}
-                    source={this.state.avatar}
+                    source={this.props.avatar}
                 />
             </TouchableOpacity>
         )
@@ -67,4 +66,7 @@ const styles = StyleSheet.create({
     },
 })
 
-export default Avatar
+const mapStateToProps = state => ({
+    avatar: state.changeAvatar.avatar
+})
+export default connect(mapStateToProps)(Avatar)

@@ -1,4 +1,10 @@
-import { createStore } from 'redux'
+import { createStore, combineReducers } from 'redux'
 import toogleFavorite from './Reducers/favoriteReducer'
+import changeAvatar from './Reducers/avatarReducer'
 
-export default createStore(toogleFavorite)
+
+const reducers = combineReducers({
+    toogleFavorite,
+    changeAvatar
+})
+export default createStore(reducers)

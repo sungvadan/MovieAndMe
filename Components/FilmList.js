@@ -33,6 +33,6 @@ class FilmList extends React.Component
 }
 
 const mapStateToProps = state => ({
-    favoritesFilm: state.favoritesFilm
+    favoritesFilm: state.toogleFavorite.favoritesFilm
 })
 export default connect(mapStateToProps)(FilmList)
