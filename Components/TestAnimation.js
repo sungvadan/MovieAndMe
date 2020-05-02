@@ -14,7 +14,7 @@ class TestAnimation extends React.Component
         Animated.spring(this.state.topPosition, {
             toValue: 100,
             speed: 4,
-            bounciness: 30
+            bounciness: 30,
         }).start()
     }
 

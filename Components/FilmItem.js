@@ -28,7 +28,7 @@ class FilmItem extends React.Component {
             Animated.spring(this.state.leftAnimation, {
                 toValue: 0,
                 tension: 8,
-                friction: 3
+                friction: 3,
             }),
         ]).start()
     }   

@@ -19,7 +19,7 @@ class EnlargeShrink extends React.Component
                 {
                     toValue: 70,
                     tension: 8,
-                    friction: 3
+                    friction: 3,
                 }
             ),
             Animated.spring(
@@ -27,7 +27,7 @@ class EnlargeShrink extends React.Component
                 {
                     toValue: 70,
                     tension: 8,
-                    friction: 3
+                    friction: 3,
                 }
             ),
         ]).start()
@@ -40,7 +40,7 @@ class EnlargeShrink extends React.Component
                 {
                     toValue: 40,
                     tension: 8,
-                    friction: 3
+                    friction: 3,
                 }
             ),
             Animated.spring(
@@ -48,7 +48,7 @@ class EnlargeShrink extends React.Component
                 {
                     toValue: 40,
                     tension: 8,
-                    friction: 3
+                    friction: 3,
                 }
             ),
         ]).start()
